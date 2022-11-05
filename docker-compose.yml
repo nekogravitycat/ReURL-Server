@@ -3,7 +3,7 @@ services:
   reurl:
     image: nekogravitycat/reurl:latest
     container_name: reurl
-    restart: unless-stopped
+    restart: on-failure
     expose:
       - "5000"
     environment:
@@ -15,7 +15,7 @@ services:
   reurl-nginx:
     build: ./nginx
     container_name: reurl-nginx
-    restart: unless-stopped
+    restart: on-failure
     expose:
       - 80
     depends_on:
@@ -23,7 +23,7 @@ services:
   reurl-cloudflared:
     image: cloudflare/cloudflared:latest
     container_name: reurl-cloudflared
-    restart: unless-stopped
+    restart: on-failure
     command: tunnel run
     env_file:
       - ./.env/cloudflared.env
