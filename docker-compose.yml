@@ -10,6 +10,8 @@ services:
       - GUNICORN_CMD_ARGS="-b 0.0.0.0:5000"
     env_file:
       - ./.env/reurl.env
+    volumes:
+      - ./data:/app/data
   nginx:
     build: ./nginx
     container_name: nginx
