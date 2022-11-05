@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+  reurl:
+    image: nekogravitycat/reurl:latest
+    container_name: reurl
+    restart: unless-stopped
+    expose:
+      - "5000"
+    environment:
+      - GUNICORN_CMD_ARGS="-b 0.0.0.0:5000"
+    env_file:
+      - ./.env/reurl.env
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    restart: unless-stopped
+    expose:
+      - 80
+    depends_on:
+      - reurl
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    restart: unless-stopped
+    command: tunnel run
+    env_file:
+      - ./.env/cloudflared.env
+    depends_on:
+      - nginx
