@@ -14,7 +14,7 @@ services:
       - ./data:/app/data
   nginx:
     build: ./nginx
-    container_name: nginx
+    container_name: reurl-nginx
     restart: unless-stopped
     expose:
       - 80
@@ -22,10 +22,10 @@ services:
       - reurl
   cloudflared:
     image: cloudflare/cloudflared:latest
-    container_name: cloudflared
+    container_name: reurl-cloudflared
     restart: unless-stopped
     command: tunnel run
     env_file:
       - ./.env/cloudflared.env
     depends_on:
-      - nginx
+      - reurl-nginx
