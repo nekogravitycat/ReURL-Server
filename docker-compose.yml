@@ -12,7 +12,7 @@ services:
       - ./.env/reurl.env
     volumes:
       - ./data:/app/data
-  nginx:
+  reurl-nginx:
     build: ./nginx
     container_name: reurl-nginx
     restart: unless-stopped
@@ -20,7 +20,7 @@ services:
       - 80
     depends_on:
       - reurl
-  cloudflared:
+  reurl-cloudflared:
     image: cloudflare/cloudflared:latest
     container_name: reurl-cloudflared
     restart: unless-stopped
