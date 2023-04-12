@@ -9,7 +9,7 @@ services:
     environment:
       - GUNICORN_CMD_ARGS="-b 0.0.0.0:5000"
     env_file:
-      - ./.env/reurl.env
+      - ./env/reurl.env
     volumes:
       - ./data:/app/data
   reurl-nginx:
@@ -28,6 +28,6 @@ services:
     restart: on-failure
     command: tunnel run
     env_file:
-      - ./.env/cloudflared.env
+      - ./env/cloudflared.env
     depends_on:
       - reurl-nginx
